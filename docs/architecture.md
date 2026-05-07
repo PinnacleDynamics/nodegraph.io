@@ -286,6 +286,53 @@ CI computes which services changed from the diff and rebuilds only those. The re
 
 ---
 
+## 11. Block Platform — the plugin architecture
+
+Adding a new block to the catalog is **a small, well-bounded change**, not a sprint. This is the central engineering moat of the product, and the reason 45+ blocks coexist without per-block special cases.
+
+A new integration consists of, at most, five declarative pieces:
+
+```mermaid
+flowchart LR
+    Def[BlockDefinition<br/>type · default config<br/>plan · server-only flag]
+    UI[Block UI body widget<br/>reads BlockContext.cfg]
+    Insp[Inspector schema<br/>BlockConfigField &#91;&#93;]
+    Wire[Edge wiring rules<br/>kEdgeWiringRules]
+    SDK[ctx adapter<br/>extends ApiMixin]
+
+    Def -.->|registered in| Reg[(BlockRegistry)]
+    UI -.->|rendered by| Reg
+    Insp -.->|inspector dialog<br/>auto-generated| Reg
+    Wire -.->|auto-patches cfg<br/>when edges drawn| Reg
+    SDK -.->|exposed inside<br/>worker code| Reg
+```
+
+| Piece | What it provides | Required? |
+|---|---|---|
+| `BlockDefinition` | Type ID, default config map, plan tier, server-only flag, country restrictions, default size on canvas, registered icon | Always |
+| **Block UI body widget** | The Flutter widget rendered inside the block frame on the canvas | Always |
+| **Inspector schema** | Declarative list of `BlockConfigField` items — the inspector dialog is generated from this; no per-block UI code | Optional |
+| **Edge wiring rules** | Entries in `kEdgeWiringRules` describing which target types this block can connect to and which config field gets auto-patched | Whenever the block participates in edges |
+| **`ctx` adapter** | A subclass of the shared `_ApiMixin` exposing the integration's API to worker code via `ctx.{name}` | Server-mode integrations only |
+
+### Why it works
+
+- **The catalog page is generated from the registry.** Drag-and-drop sidebar, search, plan badges, country restrictions — all driven off `BlockDefinition` properties.
+- **The inspector dialog is generated from the schema.** A new config field is one line in the schema, not a new dialog widget.
+- **Edge auto-wiring is rule-driven.** Drawing an edge from Block A to Block B looks up `(A.type, B.type)` in the rule table, finds the field name to patch, and updates A's config. No per-pair imperative code.
+- **Adapter shape is uniform.** Every adapter authenticates the same way (shared `_ApiMixin`), every adapter handles "no block connected" the same way (`RuntimeError` with a helpful message), every adapter is testable in isolation.
+
+### What this enables
+
+- **Fast feature delivery.** A new exchange or messenger integration is days, not weeks.
+- **Custom client work.** Bespoke blocks for a specific client's service can be added as plugins without forking the platform — see [CONTRIBUTING.md](../CONTRIBUTING.md).
+- **Lock-step UI / API.** The frontend catalog can never lie about the backend's capabilities, because both read from the same registry.
+- **AI assistants get it for free.** The MCP `list_block_types` tool walks the registry directly, so any new block is immediately usable from Claude / Cursor / ChatGPT.
+
+This is the architectural insight that pays dividends across every other section of this document.
+
+---
+
 ## What this repository does not show
 
 The architecture is, of course, easier to describe than to build. If you're evaluating it for a hire — or for collaboration — see [CONTRIBUTING.md](../CONTRIBUTING.md) for how to get a private code walkthrough. The interesting bits are:

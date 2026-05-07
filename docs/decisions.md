@@ -181,6 +181,23 @@ The proxy's raw-body forwarding is interesting on its own: HMAC-signed requests 
 
 ---
 
+## 13. A declarative block platform, not a hard-coded set
+
+**Decision.** Every block — every exchange, every messenger, every voice integration, every monitor, every utility — is registered through a single declarative API: a `BlockDefinition`, a UI widget, an optional inspector schema, edge wiring rules, and (for server-mode integrations) a `ctx` adapter following a shared mixin. The catalog page, the inspector dialog, the edge auto-wiring, and the worker SDK exposure are all generated from those declarations.
+
+**Alternatives considered.**
+- **Hard-coded blocks.** A bespoke route for each block, a hand-written dialog per block, hand-coded edge logic per (source, target) pair. Faster to write the first 5 blocks; collapses under its own weight by block 20.
+- **Code generation from a schema (e.g. JSON-Schema → Dart).** Strictly more powerful but introduces a build step that the team would have to learn and maintain. Premature at our scale.
+- **Plugin-via-iframe** (each block ships its own bundle loaded into an iframe). Maximum decoupling but kills the canvas UX (intra-iframe messaging, focus management, drag-and-drop limitations).
+
+**Trade-off.** Keeping this declarative API clean is non-negotiable. The moment one block needs a special case ("just this one needs a custom edge handler"), the abstraction starts to leak and every subsequent block pays the cost. We have rejected several "just this once" requests for that reason. The benefit, paid back many times over, is that **block #46 takes the same time as block #6**.
+
+The other trade-off: a single declarative API means the UI is necessarily uniform. Every inspector looks the same. Every block frame is the same shape. Some integrations would be marketed better with a fully bespoke UI. We accept the uniformity for the consistency it gives users.
+
+**Status.** Working. This is the engineering moat — and the practical reason custom-block work for clients is realistic. A bespoke block for a client's internal service slots in as a plugin without touching the platform's core code.
+
+---
+
 ## What an evaluator should take away
 
 If the trade-offs above feel reasonable to you, we'll probably get along. If you have strong opinions on any of them — especially #6 (sync DB) or #10 (MCP-over-REST) — I'd genuinely enjoy the conversation. Open an issue, or reach out via [LinkedIn](https://www.linkedin.com/in/gennady-mikhaylov/).

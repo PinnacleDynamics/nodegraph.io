@@ -120,6 +120,7 @@ flowchart LR
 | **Containers** | Docker · Docker Compose · private image registry |
 | **CI / CD** | GitHub Actions with paths-filter — rebuild and redeploy only the services whose code changed |
 | **Egress / network** | Managed serverless egress proxy with rotating IPs (EU region) — protects against exchange-side IP-concentration rate limits |
+| **Block Platform** | Declarative `BlockDefinition` registry · auto-generated catalog & inspector UIs · rule-based edge wiring · uniform `_ApiMixin` for SDK adapters — adding a new integration is a small diff, not a fork |
 | **AI integrations** | Claude / Grok / GPT / DeepSeek / Groq via unified `ctx.llm` router · MCP server with 13 tools (FastMCP) |
 | **Observability** | Plausible analytics · structured logs · Redis stream of monitor events |
 | **Analytics privacy** | No third-party trackers · cookieless analytics · Fernet at rest for secrets |
@@ -127,6 +128,9 @@ flowchart LR
 ---
 
 ## Selected features
+
+### Block Platform — extensible by design
+Every block on the canvas — AI Agent, Bybit, PBX, Voice Translator, Worker, the lot — is registered through a single declarative API. The catalog page, the inspector dialogs, the edge auto-wiring, and the SDK adapters are all generated from those declarations. Adding a new integration (a new exchange, a new messenger, a custom enterprise service) is a small diff, not a fork. This is the core engineering moat — and the reason custom-block work for clients is realistic without compromising the platform. See [decisions.md → "A declarative block platform"](docs/decisions.md#13-a-declarative-block-platform-not-a-hard-coded-set).
 
 ### Edges replace configuration
 Drawing an edge between two blocks automatically wires up their SDK. Worker → Bybit edge ⇒ `ctx.bybit` becomes available inside the worker. Delete the edge ⇒ disconnected. **No manual config needed anywhere in the product.** Detailed write-up in [decisions.md → "Edges as the only source of configuration"](docs/decisions.md#1-edges-as-the-only-source-of-configuration).
@@ -199,6 +203,10 @@ Built by **Gennady Mikhaylov** — backend / full-stack engineer focused on real
 [LinkedIn → linkedin.com/in/gennady-mikhaylov](https://www.linkedin.com/in/gennady-mikhaylov/)
 
 Open to remote.
+
+### Custom integrations
+
+Because the platform is built around a declarative block registry, **bespoke integrations slot in cleanly**. If you have a service, an internal API, a vendor SDK, or a workflow that should live as a block on an AiSpinner canvas — for your team, your clients, or your product — get in touch via LinkedIn. We do this work on a project basis without forking the product.
 
 ---
 

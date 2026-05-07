@@ -266,6 +266,46 @@ Everything user-facing reflects the same edge-as-config model. A short list:
 
 ---
 
+## 7. How a new block is added
+
+Every block on the canvas is registered through a single declarative API. A new integration — say, a new exchange, a new messenger, or a private vendor block for a specific client — is a small, well-bounded diff against the platform, not a fork.
+
+The five pieces (most blocks need only the first two):
+
+```dart
+// 1. Declarative definition — type ID, config defaults, plan, layout
+BlockDefinition(
+  type: 'trading.acmecex',
+  title: 'AcmeCEX',
+  section: 'Trading',
+  subgroup: 'Crypto',
+  minPlan: 'pro',
+  serverOnly: true,
+  defaultCfg: const {
+    'acmecex_key_id': null,
+    'default_pair': 'BTC/USD',
+    'llm_node_id': '',
+  },
+  buildBody: (_, bc) => AcmeCexBlockBody(bc: bc),       // 2. UI
+  buildInspector: AcmeCexInspector.build,               // 3. (optional) inspector schema
+)
+
+// 4. Edge wiring rules — auto-patch cfg when edges are drawn
+EdgeWiringRule('code.worker',  'trading_node_ids', 'trading.acmecex'),
+EdgeWiringRule('ai.llm_agent', 'trading_node_id',  'trading.acmecex'),
+
+// 5. (Server-mode) ctx adapter — exposes the API inside worker code
+class AcmeCexAdapter(_ApiMixin):
+    def get_ticker(self, pair: str = "BTC/USD") -> dict: ...
+    def place_order(self, pair: str, side: str, qty: str): ...
+```
+
+That's the entire surface. **The catalog page, the inspector dialog, the edge auto-wiring, the SDK exposure to worker code** — all generated from these declarations. No per-block dialog widget, no per-block routing, no per-pair edge-handling code.
+
+This is the single most important architectural decision for the breadth catalog above. It's also the reason custom blocks for specific clients are realistic — the platform absorbs them as plugins. See [decisions.md → "A declarative block platform"](decisions.md#13-a-declarative-block-platform-not-a-hard-coded-set) for the trade-offs accepted to keep this generative API clean.
+
+---
+
 ## What this catalog implies for the engineering work
 
 - **45 blocks** averaging ~700 lines of UI code each — the largest single file is the Journal block at ~2 000 lines covering CSV export, audio player, campaign grouping, filters.

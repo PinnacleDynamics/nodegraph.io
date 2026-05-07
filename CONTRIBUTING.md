@@ -9,8 +9,22 @@ Hi — I'm **Gennady Mikhaylov**, the engineer behind AiSpinner. This document i
 - Senior / Staff engineering roles — backend, full-stack, real-time systems, fintech / voice AI / developer tooling
 - Contracts and consulting — same areas, plus architecture reviews and tech audits
 - Technical co-founder / founding engineer roles for the right product
+- **Custom AiSpinner integrations** — see below
 
 I'm comfortable taking ownership of an entire stack end-to-end (front to back, app to infra, design to deploy) and equally comfortable embedding into an existing team and following its conventions.
+
+## Custom integration projects
+
+The platform's block architecture is **declarative on purpose** — every block is registered through a single API (see [decisions.md → "A declarative block platform"](docs/decisions.md#13-a-declarative-block-platform-not-a-hard-coded-set)). That makes it realistic to build bespoke blocks for a specific client without forking the product.
+
+Common shapes of work:
+
+- **Private vendor block** — your internal service / SDK / database is wrapped as an AiSpinner block, available only to your team's workspaces
+- **White-label deployment** — AiSpinner runs under your branding, with a curated subset of integrations and your own private blocks
+- **Domain-specific verticals** — pre-built workspaces with the right blocks already wired up (e.g. a trading-desk template, a customer-support-voice template, a market-monitoring template)
+- **Architecture / migration consulting** — I'll write the same kind of [decisions document](docs/decisions.md) for your platform that I wrote for mine, with concrete recommendations
+
+If any of those fit what you're looking for, reach out via LinkedIn and we'll discuss scope.
 
 ## What I bring
 
