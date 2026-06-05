@@ -123,7 +123,7 @@ This same caching pathway is reused across every real-time external-data adapter
 
 ## 3. MCP server — 13 tools
 
-A FastMCP server at `https://api.aispinner.io/mcp-api/mcp` lets any MCP-compatible AI (Claude Desktop, Cursor, ChatGPT) read and modify a user's workspaces. Authenticated via the same JWT as the REST API. Stateless (`stateless_http=True`).
+A FastMCP server at `https://api.nodegraph.io/mcp-api/mcp` lets any MCP-compatible AI (Claude Desktop, Cursor, ChatGPT) read and modify a user's workspaces. Authenticated via the same JWT as the REST API. Stateless (`stateless_http=True`).
 
 | Category | Tool | What it does |
 |---|---|---|
@@ -175,7 +175,7 @@ flowchart LR
 
 ### What's interesting under the hood
 
-- **Adopt existing ElevenLabs agents.** `POST /agents/adopt` pulls full configuration (voice, prompt, tools, model, voice settings, temperature, max_tokens, platform tools, safety rules, raw config) into a local AiSpinner record without creating a new agent on ElevenLabs side. Lets users bring already-configured agents onto the canvas non-destructively.
+- **Adopt existing ElevenLabs agents.** `POST /agents/adopt` pulls full configuration (voice, prompt, tools, model, voice settings, temperature, max_tokens, platform tools, safety rules, raw config) into a local NodeGraph record without creating a new agent on ElevenLabs side. Lets users bring already-configured agents onto the canvas non-destructively.
 
 - **Chunked campaign dialer.** A large campaign is split into chunks sized to the user's chosen concurrency. Each chunk submits a batch and waits for it to complete before the next one starts. Pause / resume / stop is implemented via Redis flags polled at chunk boundaries; the campaign state survives container restarts. After completion, a short wait + retry pass resolves all conversations (transcripts, summaries) before marking the campaign done.
 

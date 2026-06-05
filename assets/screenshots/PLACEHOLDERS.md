@@ -15,9 +15,9 @@ The README references the following screenshots. Recommended size **1280×720** 
 | Filename | Suggested capture |
 |---|---|
 | `voice-translator.png` | Voice Translator block with two phone number connections + active session indicator |
-| `mcp-claude.png` | Claude Desktop UI calling an AiSpinner MCP tool (e.g. `add_node` or `get_workspace_graph`) |
+| `mcp-claude.png` | Claude Desktop UI calling an NodeGraph MCP tool (e.g. `add_node` or `get_workspace_graph`) |
 | `streaming-monitor.png` | Worker Monitor showing live data from 3+ external APIs side by side |
-| `landing-hero.png` | Top of aispinner.io showing the canvas demo |
+| `landing-hero.png` | Top of nodegraph.io showing the canvas demo |
 | `pricing.png` | The pricing section with all 3 plans visible |
 
 ## Tips
