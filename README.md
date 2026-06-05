@@ -1,18 +1,18 @@
 <p align="center">
-  <img src="assets/banner.png" alt="AiSpinner — Visual AI Agent Constructor" width="100%">
+  <img src="assets/banner.png" alt="NodeGraph — Visual AI Agent Constructor" width="100%">
 </p>
 
-<h1 align="center">AiSpinner</h1>
+<h1 align="center">NodeGraph</h1>
 
 <p align="center">
   <strong>Visual node-based constructor for AI voice agents, messenger bots, and 24/7 automation workflows.</strong>
 </p>
 
 <p align="center">
-  <a href="https://aispinner.io">aispinner.io</a> ·
-  <a href="https://app.aispinner.io">app.aispinner.io</a> ·
-  <a href="https://docs.aispinner.io">docs.aispinner.io</a> ·
-  <a href="https://api.aispinner.io">api.aispinner.io</a>
+  <a href="https://nodegraph.io">nodegraph.io</a> ·
+  <a href="https://app.nodegraph.io">app.nodegraph.io</a> ·
+  <a href="https://docs.nodegraph.io">docs.nodegraph.io</a> ·
+  <a href="https://api.nodegraph.io">api.nodegraph.io</a>
 </p>
 
 <p align="center">
@@ -28,7 +28,7 @@
 
 ## What it is
 
-AiSpinner is a **production-deployed** visual platform where users compose AI workflows by dragging blocks onto a canvas and connecting them with edges. Behind the scenes it executes those workflows — making and answering real phone calls, running AI voice agents, driving Telegram / WhatsApp / Discord / Matrix bots, running sandboxed Python 24/7, querying 5 LLM providers, calling any external API or CRM, and pushing real-time monitoring to dashboards.
+NodeGraph is a **production-deployed** visual platform where users compose AI workflows by dragging blocks onto a canvas and connecting them with edges. Behind the scenes it executes those workflows — making and answering real phone calls, running AI voice agents, driving Telegram / WhatsApp / Discord / Matrix bots, running sandboxed Python 24/7, querying 5 LLM providers, calling any external API or CRM, and pushing real-time monitoring to dashboards.
 
 > ![Canvas screenshot](assets/screenshots/canvas-overview.png)
 > _Workspace canvas: Worker block connected to Telegram, an external API, Monitor, and Claude Agent. Drawing the edge automatically wires up the SDK — `ctx.telegram`, `ctx.http`, etc. — inside the worker code._
@@ -156,7 +156,7 @@ In Server execution mode, the runtime maintains long-lived WebSocket connections
 The Voice Translator block bridges two phone lines, transcribes each side, translates via OpenAI Realtime, and speaks the translation back to the other party. A glossary field forwards proper-noun and technical-term hints into both Realtime sessions to prevent mistranslation.
 
 ### MCP-first AI control surface
-A FastMCP server at `https://api.aispinner.io/mcp-api/mcp` exposes 13 tools — `get_workspace_graph`, `add_node`, `connect_nodes`, `update_node_config`, `start_dialer`, `restart_worker`, etc. — so any MCP-compatible AI (Claude Desktop, Cursor, ChatGPT) can read and modify workspaces directly. JWT-authenticated. Stateless.
+A FastMCP server at `https://api.nodegraph.io/mcp-api/mcp` exposes 13 tools — `get_workspace_graph`, `add_node`, `connect_nodes`, `update_node_config`, `start_dialer`, `restart_worker`, etc. — so any MCP-compatible AI (Claude Desktop, Cursor, ChatGPT) can read and modify workspaces directly. JWT-authenticated. Stateless.
 
 ### Voice agents and PBX
 End-to-end ElevenLabs Conversational AI integration: phone numbers, AI agents, virtual PBX with chunked campaign auto-dialer, journal with audio playback and transcripts, post-call webhooks, operator routing. Custom Voice mode swaps in your own STT / LLM / TTS pipeline (Deepgram + DeepSeek + Cartesia) over Asterisk SIP/ARI.
@@ -186,7 +186,7 @@ End-to-end ElevenLabs Conversational AI integration: phone numbers, AI agents, v
 
 ## Why is the source private?
 
-AiSpinner is a closed-source commercial product. The repository here exists so that prospective collaborators, hiring teams, and AI evaluators can understand the architecture and engineering decisions without me handing over the entire production codebase.
+NodeGraph is a closed-source commercial product. The repository here exists so that prospective collaborators, hiring teams, and AI evaluators can understand the architecture and engineering decisions without me handing over the entire production codebase.
 
 If you'd like to:
 
@@ -206,7 +206,7 @@ Open to remote.
 
 ### Custom integrations
 
-Because the platform is built around a declarative block registry, **bespoke integrations slot in cleanly**. If you have a service, an internal API, a vendor SDK, or a workflow that should live as a block on an AiSpinner canvas — for your team, your clients, or your product — get in touch via LinkedIn. We do this work on a project basis without forking the product.
+Because the platform is built around a declarative block registry, **bespoke integrations slot in cleanly**. If you have a service, an internal API, a vendor SDK, or a workflow that should live as a block on an NodeGraph canvas — for your team, your clients, or your product — get in touch via LinkedIn. We do this work on a project basis without forking the product.
 
 ---
 

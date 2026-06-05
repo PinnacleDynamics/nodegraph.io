@@ -2,13 +2,13 @@
 
 A summary of the public surfaces a client (web, mobile, AI assistant, automation script) can talk to.
 
-The full reference for each surface lives at [docs.aispinner.io](https://docs.aispinner.io). This page exists so an evaluator can see the shape and depth of the API without leaving the repo.
+The full reference for each surface lives at [docs.nodegraph.io](https://docs.nodegraph.io). This page exists so an evaluator can see the shape and depth of the API without leaving the repo.
 
 | Surface | Where | Auth |
 |---|---|---|
-| REST | `https://api.aispinner.io` | JWT Bearer |
-| WebSocket events | `wss://api.aispinner.io/ws/events/{ws_id}?token=<JWT>` | JWT in query string |
-| MCP server | `https://api.aispinner.io/mcp-api/mcp` | JWT Bearer (FastMCP) |
+| REST | `https://api.nodegraph.io` | JWT Bearer |
+| WebSocket events | `wss://api.nodegraph.io/ws/events/{ws_id}?token=<JWT>` | JWT in query string |
+| MCP server | `https://api.nodegraph.io/mcp-api/mcp` | JWT Bearer (FastMCP) |
 
 ---
 
@@ -109,7 +109,7 @@ Per-node carrier configuration for `ai.phone_number` blocks.
 Single connection per workspace. Multi-listener pattern on the client: each block registers callbacks by `nodeId` so several blocks listen simultaneously without re-opening sockets.
 
 ```
-wss://api.aispinner.io/ws/events/{workspace_id}?token=<JWT>
+wss://api.nodegraph.io/ws/events/{workspace_id}?token=<JWT>
 ```
 
 ### Event types

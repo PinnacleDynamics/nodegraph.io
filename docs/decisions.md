@@ -169,7 +169,7 @@ The proxy's raw-body forwarding is interesting on its own: HMAC-signed requests 
 
 ## 12. Static landing site, no SSG / Next.js / Astro
 
-**Decision.** `aispinner.io` is a single hand-written HTML file with inline CSS. No bundler, no framework, no build step.
+**Decision.** `nodegraph.io` is a single hand-written HTML file with inline CSS. No bundler, no framework, no build step.
 
 **Alternatives considered.**
 - **Next.js / Astro.** Modern static-site frameworks with great DX.

@@ -1,6 +1,6 @@
 # Architecture
 
-This document describes the production architecture of AiSpinner — the topology, the services, the data flow, and the deploy pipeline. It is written for an engineer or an AI evaluator deciding whether the project demonstrates production-grade thinking.
+This document describes the production architecture of NodeGraph — the topology, the services, the data flow, and the deploy pipeline. It is written for an engineer or an AI evaluator deciding whether the project demonstrates production-grade thinking.
 
 For the trade-offs that drove these choices, see [decisions.md](decisions.md).
 
@@ -61,10 +61,10 @@ flowchart TB
 
 | Subdomain | Backed by |
 |---|---|
-| `aispinner.io` | static landing site (HTML/CSS) |
-| `app.aispinner.io` | Flutter Web build with SPA fallback (`try_files {path} /index.html`) |
-| `api.aispinner.io` | core-api with WebSocket upgrade for `/ws/events/*` |
-| `docs.aispinner.io` | static VitePress build |
+| `nodegraph.io` | static landing site (HTML/CSS) |
+| `app.nodegraph.io` | Flutter Web build with SPA fallback (`try_files {path} /index.html`) |
+| `api.nodegraph.io` | core-api with WebSocket upgrade for `/ws/events/*` |
+| `docs.nodegraph.io` | static VitePress build |
 
 Caddy handles automatic Let's Encrypt renewal, gzip + zstd encoding, and host-specific cache-control rules (e.g. no-cache for the Flutter bootstrap files, long cache for hashed asset bundles).
 
